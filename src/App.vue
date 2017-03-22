@@ -1,6 +1,17 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <header class="header">
+      <nav class="inner">
+        <router-link to="/" exact>
+          <img class="create-icon" src="./assets/nav-create.png" alt="create-icon">
+        </router-link>
+        <router-link to="/top">Top</router-link>
+        <router-link to="/new">New</router-link>
+        <router-link to="/tags">Tags</router-link>
+        <router-link to="/like">Like</router-link>
+        <router-link to="/profile">Profile</router-link>
+      </nav>
+    </header>
     <router-view></router-view>
   </div>
 </template>
