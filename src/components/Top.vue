@@ -1,40 +1,54 @@
 <template>
   <div class="top-view">
-    <h1>{{ msg }}</h1>
+    <p>
+      Ask a yes/no question:
+      <input v-model="question">
+    </p>
+    <p>{{ answer }}</p>
   </div>
 </template>
 
 <script>
+  import _ from 'lodash'
   export default {
     name: 'top',
     data () {
       return {
-        msg: 'Welcome to Top View'
+        question: '',
+        answer: 'I cannot give you an answer until you ask a question!'
+      }
+    },
+    watch: {
+      question: function (newQuestion) {
+        this.answer = 'Waiting for you to stop typing...'
+        this.getAnswer()
+      }
+    },
+    methods: {
+      getAnswer: _.debounce(
+        function () {
+          const vm = this
+          if (this.question.indexOf('?') === -1) {
+            vm.answer = 'Questions usually contain a question mark. ;-)'
+            return
+          }
+          vm.answer = 'Thinking...'
+          this.axios.get('https://yesno.wtf/api')
+            .then(function (response) {
+              vm.answer = _.capitalize(response.data.answer)
+            })
+            .catch(function (error) {
+              vm.answer = 'Error! Could not reach the API. ' + error
+            })
+        },
+        500
+      ),
+      getList: function () {
+//        const url = 'https://www.reddit.com/.json'
       }
     }
   }
 </script>
 
 <style scoped>
-
-  .top-view {
-    padding-top: 45px;
-  }
-  h1, h2 {
-    font-weight: normal;
-  }
-
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
-
-  a {
-    color: #42b983;
-  }
 </style>
