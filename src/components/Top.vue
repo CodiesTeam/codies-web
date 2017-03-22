@@ -5,6 +5,11 @@
       <input v-model="question">
     </p>
     <p>{{ answer }}</p>
+    <ul>
+      <li v-for="item in 10">
+        {{ item }}
+      </li>
+    </ul>
   </div>
 </template>
 

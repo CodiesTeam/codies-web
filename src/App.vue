@@ -17,9 +17,15 @@
 </template>
 
 <script>
-export default {
-  name: 'app'
-}
+  import Favico from 'favico.js'
+  const favicon = new Favico({
+    position: 'up'
+  })
+  favicon.badge(3)
+
+  export default {
+    name: 'app'
+  }
 </script>
 
 <style>
